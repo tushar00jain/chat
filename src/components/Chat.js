@@ -18,19 +18,27 @@ export default class Chat extends Component {
   }
 
   componentDidMount() {
-    this.socket.emit('test')
+    this.socket.emit('client:connection')
+
+    this.socket.on('server:message', message => {
+      let messages = this.state.messages
+      messages.push({
+        message,
+        me: false
+      })
+      this.setState({ messages })
+    })
   }
 
   handleSubmit (message) {
-
     let messages = this.state.messages
     messages.push({
       message,
       me: true
     })
+    this.socket.emit('client:message', message)
     this.setState({ messages })
     console.log(this.state.messages)
-
   }
 
   render () {

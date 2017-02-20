@@ -40,22 +40,25 @@ app.get(/^(?!\/api).*$/, (req, res) => {
 
 // socket io
 io.on('connection', socket => {
-  console.log('connction')
+  console.log('io connction')
 
-  socket.on('new-message', message => {
-    console.log(message)
-    io.emmit('receive-message', message)
+  socket.on('client:message', message => {
+    io.emit('server:message', message)
   })
 
-  socket.on('test', data => {
-    console.log(data)
+  socket.on('client:connection', () => {
+    console.log('connect')
+  })
+
+  socket.on('client:disconnect', () => {
+    console.log('disconnect')
   })
 })
 
 // start mongo and server
 if (!module.parent) {
   db.once('open', () => {
-    console.log('Connection ok!')
+    console.log('Mongo connection ok!')
     server.listen(3000, (err) => {
       if (err) {
         console.log(err)
