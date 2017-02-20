@@ -1,0 +1,77 @@
+{
+  "name": "chat",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build:webpack": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
+    "build": "npm run clean && npm run build:webpack",
+    "start": "node devServer.js",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "boilerplate",
+    "hot",
+    "reload",
+    "hmr",
+    "live",
+    "edit",
+    "webpack",
+    "babel",
+    "react-transform"
+  ],
+  "author": "Tushar Jain <jain00tushar@gmail.com> (http://github.com/tushar00jain)",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/tushar00jain/chat"
+  },
+  "homepage": "https://github.com/tushar00jain/chat",
+  "devDependencies": {
+    "babel-core": "^6.6.5",
+    "babel-eslint": "^5.0.0-beta4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-react-hmre": "^1.1.1",
+    "cross-env": "^1.0.7",
+    "eslint": "^1.10.3",
+    "eslint-plugin-babel": "^3.0.0",
+    "eslint-plugin-react": "^3.11.3",
+    "eventsource-polyfill": "^0.9.6",
+    "express": "^4.13.3",
+    "rimraf": "^2.4.3",
+    "webpack": "^1.12.9",
+    "webpack-dev-middleware": "^1.4.0",
+    "webpack-hot-middleware": "^2.9.1",
+    "bower-webpack-plugin": "^0.1.8"
+  },
+  "dependencies": {
+    "async": "^2.1.5",
+    "bluebird": "^3.4.7",
+    "chart.js": "^1.1.1",
+    "d3": "^3.5.17",
+    "d3-tip": "^0.7.1",
+    "function-plot": "^1.17.3",
+    "less": "^2.7.2",
+    "less-loader": "^2.2.3",
+    "mongoose": "^4.8.4",
+    "pondjs": "^0.7.2",
+    "react": "^0.14.7",
+    "react-chartjs": "^0.8.0",
+    "react-dom": "^0.14.7",
+    "react-router": "^2.0.0",
+    "react-simple-tooltip": "^1.0.5",
+    "react-svg-line-chart": "^1.0.3",
+    "react-timeseries-charts": "^0.11.2",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3",
+    "style-loader": "^0.13.1",
+    "webpack-dev-server": "^1.16.2"
+  }
+}

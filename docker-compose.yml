@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    container_name: app
+    volumes: 
+      - ".:/usr/src/app"
+      - /usr/src/app/node_modules
+    networks:
+      - default
+    ports:
+     - "3000:3000"
+    entrypoint: /bin/bash
+    # entrypoint: npm run start
+    # entrypoint: ./node_modules/.bin/webpack --config webpack.config.js
+
+  db:
+    image: mongo:3.0
+    container_name: db
+    ports:
+      - "0.0.0.0:27017:27017"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
