@@ -29,11 +29,11 @@ app.use(require('webpack-hot-middleware')(compiler))
 app.use(express.static('public'))
 
 // api
-app.get('/api/test', function(req, res) {
+app.get('/api/test', (req, res) => {
   res.send('api')
 })
 
-app.get(/^(?!\/api).*$/, function(req, res) {
+app.get(/^(?!\/api).*$/, (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
 
@@ -51,6 +51,7 @@ io.on('connection', socket => {
   })
 })
 
+// start mongo and server
 if (!module.parent) {
   db.once('open', () => {
     console.log('Connection ok!')
