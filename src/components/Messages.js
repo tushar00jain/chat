@@ -6,6 +6,11 @@ export default class Messages extends Component {
 		super(props)
 	}
 
+  componentDidUpdate() {
+    const messages = document.getElementById('messages')
+    messages.scrollTop = messages.scrollHeight
+  }
+
   render () {
     const messages = this.props.messages.map((message, i) => {
     return (

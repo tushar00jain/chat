@@ -9,8 +9,8 @@ export default class Messages extends Component {
     const me = this.props.me ? 'me' : '';
 
     return (
-      <div className={me}>
-        <div className='message'>
+      <div className={'message ' + me}>
+        <div className='message-content'>
           { this.props.message }
         </div>
       </div>

@@ -11,14 +11,14 @@ export default class Chat extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      messages: [],
-      socket: io('http://localhost:3000', { path: '/api/chat' })
+      messages: []
     }
+    this.socket = io('http://localhost:3000', { path: '/api/chat' }) 
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.state.socket.emit('test')
+    this.socket.emit('test')
   }
 
   handleSubmit (message) {
@@ -36,13 +36,17 @@ export default class Chat extends Component {
   render () {
     return (
     <div>
-      <Link to="/analytics">Analytics</Link>
-        <div>
-          <h2>Chat</h2>
-          <Messages messages={this.state.messages}></Messages>
-          <Input handleSubmit={this.handleSubmit}></Input>
-          
-        </div>
+      <Link to="/analytics">
+          <h3>
+            Analytics
+          </h3>
+      </Link>
+
+      <div className="container">
+        <h2>Chat</h2>
+        <Messages messages={this.state.messages}></Messages>
+        <Input handleSubmit={this.handleSubmit}></Input>
+      </div>
     </div>
     )
   }

@@ -26,7 +26,8 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 // middleware
 app.use(require('webpack-hot-middleware')(compiler))
-app.use(express.static('public'))
+app.use('/static', express.static(__dirname + '/public'))
+
 
 // api
 app.get('/api/test', (req, res) => {
