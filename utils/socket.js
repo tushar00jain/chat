@@ -2,17 +2,19 @@ module.exports = (function () {
   'use strict'
 
   var methods = {}
-  var messages = []
-  var clients = []
+  var data = {
+    messages: [],
+    clients: []
+  }
 
   methods.addMessage = function (message) {
-    messages.push(message)
-    console.log(messages)
+    data.messages.push(message)
+    console.log(data.messages)
   }
 
   methods.addClient = function (clientId) {
-    clients.push(clientId)
-    console.log(clients)
+    data.clients.push(clientId)
+    console.log(data.clients)
   }
 
   return methods
