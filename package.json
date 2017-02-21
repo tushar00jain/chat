@@ -55,16 +55,17 @@
     "style-loader": "^0.13.1"
   },
   "dependencies": {
-    "express": "^4.13.3",
     "async": "^2.1.5",
     "bluebird": "^3.4.7",
     "chart.js": "^1.1.1",
     "d3": "^3.5.17",
     "d3-cloud": "^1.2.4",
+    "express": "^4.13.3",
     "mongoose": "^4.8.4",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
-    "react-router": "^2.0.0",
+    "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-dom": "15.4.2",
+    "react-router": "^3.0.2",
     "socket.io": "^1.7.3",
     "socket.io-client": "^1.7.3"
   }

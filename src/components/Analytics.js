@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'react-router'
 import d3 from 'd3'
 import cloud from 'd3-cloud'
@@ -19,34 +20,50 @@ class Cloud extends Component {
   }
 
   componentDidMount () {
-    this.update()
+    this.update(this.props.data)
   }
   
   componentDidUpdate () {
-    this.update()
+    this.update(this.props.data)
   }
 
-  update () {
+  update (data) {
     this.layout
-        .size([800, 300])
-        .words(this.props.data)
+        .size([800, 500])
+        .words(data)
         .rotate(0)
-        .fontSize(d => d.size)
+        .fontSize(d => d.size * 10)
         .on("end", this.draw)
         .start()
   }
 
-  draw () {
-    d3.select(ReactDOM.findDOMNode(this))
-      .selectAll("text")
-      .data(this.props.data)
-      .enter().append("text")
-      .style("font-size", d => d.size + "px")
+  draw (data) {
+    let element = d3.select(ReactDOM.findDOMNode(this))
+                    .selectAll("g text")
+                    .data(data, d => d.text)
+    element
+      .enter()
+      .append("text")
       .style("fill", (d, i) => this.color(i))
+      .attr('font-size', 1)
+      .text(d => d.text )
+
+    element
+      .transition()
+      .duration(600)
+      .style("font-size", d => d.size + "px")
       .attr("transform", d => {
         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")"
       })
-      .text(d => d.text )
+      .style("fill-opacity", 1)
+
+    element
+      .exit()
+      .transition()
+      .duration(200)
+      .style('fill-opacity', 1e-6)
+      .attr('font-size', 1)
+      .remove()
   }
 
   render () {
@@ -63,7 +80,7 @@ export default class Analytics extends Component {
     this.socket = io('http://localhost:3000', { path: '/api/chat' }) 
 
     this.state = {
-      messages: [],
+      // messages: [],
       cloud: []
     }
 
@@ -72,7 +89,8 @@ export default class Analytics extends Component {
 
   loadData () {
     d3
-    .json('http://localhost:3000/static/data/words.json', (err, data) => {
+    .json('http://localhost:3000/api/counts', (err, data) => {
+    // .json('http://localhost:3000/static/data/words.json', (err, data) => {
       if (err) return console.log(err)
       this.setState({
         cloud: data
@@ -84,14 +102,13 @@ export default class Analytics extends Component {
     this.socket.emit('client:analytics:connection')
 
     this.socket.on('server:message', message => {
-      let messages = this.state.messages
-      messages.push(message)
-      this.setState({ messages })
-      console.log(this.state.messages)
+      // let messages = this.state.messages
+      // messages.push(message)
+      // this.setState({ messages })
+      this.loadData()
     })
 
     this.socket.on('server:cloud', data => {
-      console.log(data)
     })
     this.loadData()
   }

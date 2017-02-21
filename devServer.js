@@ -30,8 +30,8 @@ app.use('/static', express.static(__dirname + '/public'))
 
 
 // api
-app.get('/api/test', (req, res) => {
-  res.send('api')
+app.get('/api/counts', (req, res) => {
+  res.send(utilSocket.getCounts())
 })
 
 app.get(/^(?!\/api).*$/, (req, res) => {
@@ -44,6 +44,8 @@ io.on('connection', socket => {
     socket.broadcast.emit('server:message', message)
     io.emit('server:cloud', 'test')
     utilSocket.addMessage(message)
+    utilSocket.getCounts()
+
   })
 
   socket.on('client:connection', () => {
