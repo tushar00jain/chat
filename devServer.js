@@ -39,17 +39,16 @@ app.get(/^(?!\/api).*$/, (req, res) => {
 })
 
 // socket io
-var clients = []
 io.on('connection', socket => {
-
   socket.on('client:message', message => {
     socket.broadcast.emit('server:message', message)
+    io.emit('server:cloud', 'test')
+    utilSocket.addMessage(message)
   })
 
   socket.on('client:connection', () => {
     console.log('connect')
-    clients.push(socket.id)
-    console.log(clients)
+    utilSocket.addClient(socket.id)
   })
 
   socket.on('client:disconnect', () => {

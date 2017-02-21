@@ -9,7 +9,8 @@ export default class Analytics extends Component {
     this.socket = io('http://localhost:3000', { path: '/api/chat' }) 
 
     this.state = {
-      messages: []
+      messages: [],
+      cloud: []
     }
   }
 
@@ -21,6 +22,10 @@ export default class Analytics extends Component {
       messages.push(message)
       this.setState({ messages })
       console.log(this.state.messages)
+    })
+
+    this.socket.on('server:cloud', data => {
+      console.log(data)
     })
 
   }
