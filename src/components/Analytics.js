@@ -32,7 +32,7 @@ class Cloud extends Component {
         .size([800, 500])
         .words(data)
         .rotate(0)
-        .fontSize(d => d.size * 10)
+        .fontSize(d => d.size * 15)
         .on("end", this.draw)
         .start()
   }
