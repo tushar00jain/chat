@@ -14,4 +14,4 @@ npm run start
 ```
 
 ## Demo
-![](https://giphy.com/gifs/26BGCVHRvstqHUtzy)
+![](http://i.giphy.com/26BGCVHRvstqHUtzy.gif)
