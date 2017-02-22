@@ -31,4 +31,4 @@ npm run start
   - ```localhost:3000/analytics```  chat analytics window
 
 ## Demo
-![](http://i.giphy.com/26BGCVHRvstqHUtzy.gif)
+![](http://i.giphy.com/l44Qw2um6tqoVC9TG.gif)
