@@ -2,6 +2,7 @@
 This is a real time chat application that also provides data analytics on the chat content.
 This application uses ```MongoDB``` and ```Node.js``` for the backend and ```React.js``` and ```d3.js``` on the client.
 You only need docker installed on your computer to run this application.
+The client will need to enter a username to access the chat. Afterwards, the conversation among all the clients will be saved to mongoDB.
 
 ## Instructions
   - Run the commands for the development or production version provided below
