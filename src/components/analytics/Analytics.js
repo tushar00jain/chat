@@ -24,11 +24,9 @@ export default class Analytics extends Component {
   loadData () {
     // load data for the word cloud
     d3
-    .json('http://localhost:3000/api/counts', (err, data) => {
+    .json('http://localhost:3000/api/counts', (err, cloud) => {
       if (err) return console.log(err)
-      this.setState({
-        cloud: data
-      })
+      this.setState({ cloud })
     })
   }
 

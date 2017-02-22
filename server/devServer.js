@@ -1,7 +1,7 @@
 var path = require('path')
   , config = require(path.join(__dirname, '../webpack.config.dev'))
   , express = require('express')
-  , utilSocket = require(path.join(__dirname, 'utils/socket.js'))
+  , utils = require(path.join(__dirname, 'utils'))
   , webpack = require('webpack')
 
   , compiler = webpack(config)
@@ -29,12 +29,9 @@ app.use(require('webpack-hot-middleware')(compiler))
 app.use('/static', express.static(path.join(__dirname, '../public')))
 
 // api
-app.get('/api/counts', (req, res, next) => {
-  res.send(utilSocket.getCounts())
-  return next()
-})
+app.get('/api/counts', utils.getCounts)
 
-app.get('/api/messages', utilSocket.getMessages)
+app.get('/api/messages', utils.getMessages)
 
 // send html file to the client at all routes except `/api/*`
 // client side routing handled by react router
@@ -48,7 +45,7 @@ io.on('connection', socket => {
     // broadcast message too clients excluding the sender
     socket.broadcast.emit('server:message', message)
     // save message sent by the user
-    utilSocket.addMessage(message)
+    utils.addMessage(message)
   })
 
   socket.on('client:connection', () => {
