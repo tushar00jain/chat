@@ -12,11 +12,13 @@ export default class Messages extends Component {
   }
 
   render () {
+    const { user } = this.props
     const messages = this.props.messages.map((message, i) => {
-    return (
-      <Message key={i}
-        message={message.message}
-        me={message.me} />
+      return (
+        <Message key={i}
+          message={message}
+          user={this.props.user} 
+        />
       )
     })
 

@@ -6,12 +6,12 @@
     "clean": "rimraf dist",
     "build:webpack": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "build": "npm run clean && npm run build:webpack",
-    "start": "node devServer.js",
+    "start": "node server/devServer.js",
     "lint": "eslint src"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/tushar00jain"
+    "url": "http://github.com/tushar00jain/chat"
   },
   "keywords": [
     "react",
@@ -61,12 +61,14 @@
     "d3": "^3.5.17",
     "d3-cloud": "^1.2.4",
     "express": "^4.13.3",
+    "lodash": "^4.17.4",
     "mongoose": "^4.8.4",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "15.4.2",
     "react-router": "^3.0.2",
     "socket.io": "^1.7.3",
-    "socket.io-client": "^1.7.3"
+    "socket.io-client": "^1.7.3",
+    "superagent": "^3.4.4"
   }
 }

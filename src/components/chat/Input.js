@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 export default class Input extends Component {
   constructor (props) {
 		super(props)
+    // input value
     this.state = {
       value: ''
     }
@@ -10,10 +11,12 @@ export default class Input extends Component {
     this.handleChange = this.handleChange.bind(this)
 	}
 
+  // input changed
   handleChange (e) {
     this.setState({value: e.target.value})
   }
 
+  // after user pressed enter
   handleSubmit (e) {
     e.preventDefault()
     this.props.handleSubmit(this.state.value)

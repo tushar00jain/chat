@@ -6,12 +6,13 @@ export default class Messages extends Component {
 	}
 
   render () {
-    const me = this.props.me ? 'me' : '';
+    const { message, user } = this.props
+    const me = user === message.user ? 'me' : ''
 
     return (
       <div className={'message ' + me}>
         <div className='message-content'>
-          { this.props.message }
+          { message.message }
         </div>
       </div>
     )

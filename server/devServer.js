@@ -1,7 +1,7 @@
-var config = require('./webpack.config.dev')
+var path = require('path')
+  , config = require(path.join(__dirname, '../webpack.config.dev'))
   , express = require('express')
-  , path = require('path')
-  , utilSocket = require('./utils/socket.js')
+  , utilSocket = require(path.join(__dirname, 'utils/socket.js'))
   , webpack = require('webpack')
 
   , compiler = webpack(config)
@@ -26,35 +26,35 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 // middleware
 app.use(require('webpack-hot-middleware')(compiler))
-app.use('/static', express.static(__dirname + '/public'))
-
+app.use('/static', express.static(path.join(__dirname, '../public')))
 
 // api
-app.get('/api/counts', (req, res) => {
+app.get('/api/counts', (req, res, next) => {
   res.send(utilSocket.getCounts())
+  return next()
 })
 
+app.get('/api/messages', utilSocket.getMessages)
+
+// send html file to the client at all routes except `/api/*`
+// client side routing handled by react router
 app.get(/^(?!\/api).*$/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'))
+  res.sendFile(path.join(__dirname, '../index.html'))
 })
 
 // socket io
 io.on('connection', socket => {
   socket.on('client:message', message => {
+    // broadcast message too clients excluding the sender
     socket.broadcast.emit('server:message', message)
-    io.emit('server:cloud', 'test')
+    // save message sent by the user
     utilSocket.addMessage(message)
-    utilSocket.getCounts()
-
   })
 
   socket.on('client:connection', () => {
-    console.log('connect')
-    utilSocket.addClient(socket.id)
   })
 
   socket.on('client:disconnect', () => {
-    console.log('disconnect')
   })
 })
 
@@ -63,10 +63,7 @@ if (!module.parent) {
   db.once('open', () => {
     console.log('Mongo connection ok!')
     server.listen(3000, (err) => {
-      if (err) {
-        console.log(err)
-        return
-      }
+      if (err) return console.log(err)
       console.log('Listening at http://localhost:3000')
     })
   })

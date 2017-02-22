@@ -1,20 +1,29 @@
 module.exports = (function () {
   'use strict'
+  var _ = require('lodash')
+  var models = require('../models/Chat')
+  
 
   var methods = {}
   var data = {
     messages: [],
-    clients: [],
     messageString: ''
   }
 
-  methods.addClient = function (clientId) {
-    data.clients.push(clientId)
+  methods.addMessage = function (message) {
+    data.messages.push(message.message)
+    data.messageString += (message.message + " ")
+    const newMessage = new models.Message(message)
+    newMessage.save(err => {
+      if (err) return console.log(err)
+    })
   }
 
-  methods.addMessage = function (message) {
-    data.messages.push(message)
-    data.messageString += (message + " ")
+  methods.getMessages = function (req, res, next) {
+    models.Message.find({}, {'_id': 0, '__v': 0}).exec((err, messages) => {
+      res.json(messages)
+      return next()
+    })
   }
 
   methods.getCounts = function () {
