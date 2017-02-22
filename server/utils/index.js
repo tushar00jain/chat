@@ -1,7 +1,8 @@
 module.exports = (function () {
   'use strict'
   var _ = require('lodash')
-  var models = require('../models/Chat')
+  var promise = require('bluebird')
+  var models = require('../models/Message')
   
   // methods to be returned from this file
   var methods = {}
@@ -23,17 +24,24 @@ module.exports = (function () {
     }, 0)
   }
 
-  // add new message to mongo
+  // // add new message to mongo
   methods.addMessage = function (message) {
-    const newMessage = new models.Message(message)
-    newMessage.save(err => {
-      if (err) return console.log(err)
+    return new promise((resolve, reject) => {
+      const newMessage = new models.Message(message)
+      newMessage.save(err => {
+        if (err) reject(err)
+        else resolve()
+      })
     })
   }
 
   // get all message data from mongo
   methods.getMessages = function (req, res, next) {
     models.Message.find({}, {'_id': 0, '__v': 0}).exec((err, messages) => {
+      if (err) {
+        console.log(err.message)
+        return next(err)
+      }
       res.json(messages)
       return next()
     })
@@ -42,6 +50,10 @@ module.exports = (function () {
   // map reduce mongo and get the word counts
   methods.getCounts = function (req, res, next) {
     models.Message.mapReduce(frequency, (err, counts) => {
+      if (err) {
+        console.log(err.message)
+        return next(err)
+      }
       res.json(counts.map(d => { 
         return { text: d._id, size: d.value } 
         })

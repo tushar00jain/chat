@@ -11,7 +11,8 @@ The client will need to enter a username to access the chat. Afterwards, the con
 
 ## Production
 ```
-docker-compose up -d
+docker-compose up -d db
+docker-compose up -d app
 docker logs -f --tail=100 app
 ```
 
