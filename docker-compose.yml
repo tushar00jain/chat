@@ -11,9 +11,7 @@ services:
       - default
     ports:
      - "3000:3000"
-    entrypoint: /bin/bash
-    # entrypoint: npm run start
-    # entrypoint: ./node_modules/.bin/webpack --config webpack.config.js
+    entrypoint: npm run prod
 
   db:
     image: mongo:3.0
