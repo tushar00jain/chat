@@ -7,20 +7,27 @@ import Input from './Input'
 import Message from './Message' 
 import Messages from './Messages' 
 
+const socket = io('http://localhost:3000', { path: '/api/chat' }) 
+
 export default class Chat extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      // sent and recieved messages
       messages: []
     }
-    this.socket = io('http://localhost:3000', { path: '/api/chat' }) 
+
+    // socket connection for getting messages from other people
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.socket.emit('client:connection')
+    // new client connected to the chat application
+    console.log('mount')
+    socket.emit('client:connection')
 
-    this.socket.on('server:message', message => {
+    // addd messages from other clients
+    socket.on('server:message', message => {
       let messages = this.state.messages
       messages.push({
         message,
@@ -30,15 +37,23 @@ export default class Chat extends Component {
     })
   }
 
+  componentWillUnmount () {
+    // remove soket connection when component unmounts
+    socket.emit('client:disconnect')
+    socket.removeAllListeners('server:message')
+  }
+
+  // client sends new message
   handleSubmit (message) {
+    // update the message state
     let messages = this.state.messages
     messages.push({
       message,
       me: true
     })
-    this.socket.emit('client:message', message)
+    // send the message to other clients
+    socket.emit('client:message', message)
     this.setState({ messages })
-    console.log(this.state.messages)
   }
 
   render () {

@@ -18,7 +18,6 @@ docker-compose run --service-ports app
 ```
 Inside the container run:
 ```
-npm install
 npm run start
 ```
 
