@@ -32,3 +32,12 @@ npm run start
 
 ## Demo
 ![](http://i.giphy.com/l44Qw2um6tqoVC9TG.gif)
+
+
+## Local Deployment (under development)
+```
+sudo sh -c  "echo '127.0.0.1 chat.com' >> /etc/hosts"
+docker-compose -f docker-compose-deploy.yml up -d db
+docker-compose -f docker-compose-deploy.yml up -d app
+docker-compose -f docker-compose-deploy.yml up -d nginx-proxy
+```

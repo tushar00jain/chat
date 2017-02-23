@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    container_name: app
+    volumes: 
+      - ".:/usr/src/app"
+      - /usr/src/app/node_modules
+    networks:
+      - default
+    expose:
+      - "3000"
+    environment:
+      - VIRTUAL_HOST=chat.com
+      - VIRTUAL_PORT=3000
+    entrypoint: npm run serve
+
+  db:
+    image: mongo:3.0
+    container_name: db
+    ports: 
+      - "0.0.0.0:27017:27017"
+    networks:
+      - default
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "8000:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge

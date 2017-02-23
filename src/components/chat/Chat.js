@@ -10,7 +10,9 @@ import Message from './Message'
 import Messages from './Messages' 
 import User from './User' 
 
-const socket = io('http://localhost:3000', { path: '/api/chat' }) 
+import { SERVER } from '../../constants'
+
+const socket = io(SERVER, { path: '/api/chat' }) 
 
 export default class Chat extends Component {
   constructor(props) {
@@ -58,7 +60,7 @@ export default class Chat extends Component {
   handleUser (user) {
     this.setState({ user })
     superagent
-      .get('http://localhost:3000/api/messages')
+      .get(SERVER + '/api/messages')
       .then(res => {
         this.setState({
           messages: res.body

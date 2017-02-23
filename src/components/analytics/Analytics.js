@@ -5,8 +5,10 @@ import io from 'socket.io-client'
 
 import Cloud from './Cloud'
 
+import { SERVER } from '../../constants'
+
 // socket connection for detecting new messages
-const socket = io('http://localhost:3000', { path: '/api/chat' }) 
+const socket = io(SERVER, { path: '/api/chat' }) 
 
 export default class Analytics extends Component {
   constructor (props) {
@@ -24,7 +26,7 @@ export default class Analytics extends Component {
   loadData () {
     // load data for the word cloud
     d3
-    .json('http://localhost:3000/api/counts', (err, cloud) => {
+    .json(SERVER + '/api/counts', (err, cloud) => {
       if (err) return console.log(err)
       this.setState({ cloud })
     })
